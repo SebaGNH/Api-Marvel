@@ -6,7 +6,7 @@ const RenderDOM = {
         let contenidoHTML = '';
         const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
 
-
+        
 
         let idBuscar = document.getElementById('idBuscar');
         idBuscar.value = "";

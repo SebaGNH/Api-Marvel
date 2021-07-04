@@ -5,6 +5,7 @@
 }
 
 body {
+  font-family: "Roboto", sans-serif;
   background: #151515;
 }
 
@@ -21,6 +22,8 @@ section {
   max-width: 1200px;
   width: 100%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 section .container-super-hero h3 {
   font-family: "Roboto", sans-serif;
@@ -30,6 +33,7 @@ section .container-super-hero .list-super-hero {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 section .container-super-hero .list-super-hero .llamada {
   margin: 30px;
@@ -46,6 +50,14 @@ section .container-super-hero .list-super-hero .llamada .descripcion a {
 }
 section .container-super-hero .list-super-hero .llamada .descripcion a:hover {
   text-decoration: underline;
+}
+section .container-pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+section .container-pagination .btn {
+  width: 150px;
 }
 
 /*# sourceMappingURL=style.css.map */
