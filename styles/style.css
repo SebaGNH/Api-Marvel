@@ -15,7 +15,14 @@ header .cont-buscador {
   justify-content: center;
 }
 header .cont-buscador input {
+  max-width: 500px;
+  width: 100%;
+  max-height: 200px;
+  height: 100%;
   background: #ccc;
+  font-size: 30px;
+  padding: 10px;
+  color: #090C9B;
 }
 
 section {
@@ -28,6 +35,8 @@ section {
 section .container-super-hero h3 {
   font-family: "Roboto", sans-serif;
   text-align: center;
+  color: #B4C5E4;
+  margin: 30px;
 }
 section .container-super-hero .list-super-hero {
   display: flex;
@@ -51,13 +60,17 @@ section .container-super-hero .list-super-hero .llamada .descripcion a {
 section .container-super-hero .list-super-hero .llamada .descripcion a:hover {
   text-decoration: underline;
 }
-section .container-pagination {
+section .container-super-hero .list-super-hero .container-pagination {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-section .container-pagination .btn {
-  width: 150px;
+section .container-super-hero .list-super-hero .container-pagination .btn {
+  width: 250px;
+  height: 50px;
+}
+section .container-super-hero .list-super-hero .container-pagination .btn:hover {
+  background: #be4545;
 }
 
 /*# sourceMappingURL=style.css.map */

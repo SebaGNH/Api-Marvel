@@ -20,7 +20,7 @@ const RenderDOM = {
         /*-- Fin  <-- Declaración de variables ------------------------------------*/
         
         /* Inicio <-- Paginación ------------------------------------*/
-        let pageNumber = 5;
+        let pageNumber = 1;
         let pageSize = 5;
         let pagination;
         let pageCont = Math.ceil(conexion_api.length/pageSize);
@@ -48,15 +48,59 @@ const RenderDOM = {
             function paginate(array, page_size, page_number) {
                 return array.slice((page_number - 1) * page_size, page_number * page_size);
             }
-
             function nextPage(){
                 pageNumber ++;
+                console.log("next page");
                 //showNoticias(pagination)
             }
             function previusPage(){
+                console.log("Prev Page");
                 pageNumber --;
                 //showNoticias(pagination)
             }
+
+/* Inicio <-- Rompiendo Con pajinador ------------------------------------*/
+            function personajesCompleto4(_conexion_api){
+                var pagination = paginate(conexion_api,pageSize,pageNumber);
+                contenidoHTML = "";                
+                for (const superHero of json.data.results) {
+                    let urlHero = superHero.urls[1].url;
+                        if (pageNumber == 1) {
+                               //if(noImg!== superHero.thumbnail.path){  
+                                //contenidoHTML += `<div class="llamada">`;                          
+                                contenidoHTML += ` 
+                                <div class="llamada">                           
+                                    <div class="thumb">
+                                        <a href="${urlHero}" target="_blank">
+                                            <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
+                                        </a>
+                                    </div>
+                                    <div class="descripcion">
+                                        <a href="${urlHero}" target="_blank">
+                                            <p class="nombre">${superHero.name}</p>
+                                        </a>
+                                    </div>
+                                </div>          
+                            `;
+                          //  }                            
+                        }                     
+                       // console.log(superHero.name);
+                    }
+                   /*  contenidoHTML +=`
+                    <div class="container-pagination">
+                        <button class="btn" id="btn-prev" onclick="previusPage()">Previous</button>
+                        <button class="btn" id="btn-next" onclick="nextPage()"}>Next</button>
+                    </div>`; */
+                    
+                    //pageNumber >1  ? btn_prev.disabled = false :"";
+                    //pageNumber < pageCont ?(btn_next.disabled = false):"" ;
+                    return container.innerHTML = contenidoHTML; 
+                    //return container.innerHTML = contenidoHTML;
+            }
+
+
+
+/*-- Fin  <-- Rompiendo Con pajinador ------------------------------------*/
 
 
             function personajesCompleto(){
@@ -79,12 +123,10 @@ const RenderDOM = {
                                 </div>
                             </div>
                         `;
-                      //  }
+                       // }
                        // console.log(superHero.name);
                     }
                     
-                    pageNumber >1  ? btn_prev.disabled = false :"";
-                    pageNumber < pageCont ?(btn_next.disabled = false):"" ;
                     return container.innerHTML = contenidoHTML; 
                     //return container.innerHTML = contenidoHTML;
             }
