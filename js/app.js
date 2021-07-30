@@ -49,11 +49,9 @@ const RenderDOM = {
 
 
 
-
-        txtBuscar.addEventListener('keyup', (e)=> {  
-            
+            //Eventos
+            txtBuscar.addEventListener('keyup', (e)=> {  
                 const nombreBuscado = e.target.value; 
-
                 if (nombreBuscado.length >= 0) {
                     buscador(nombreBuscado,ApiResultados);
                 } else {
@@ -84,17 +82,6 @@ const RenderDOM = {
 };
 RenderDOM.render(); */
 
-//  Eventos
-
-/* txtBuscar.addEventListener('keyup', (e,ApiResultados)=> { 
-    console.log("hola");             
-    const nombreBuscado = e.target.value; 
-    if (nombreBuscado.length >= 0) {
-        buscador(nombreBuscado,ApiResultados);
-    } else {
-        personajesCompleto(ApiResultados); 
-    }
-} */
 
 
 //  Funciones
