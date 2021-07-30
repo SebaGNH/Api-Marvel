@@ -35,24 +35,33 @@ const RenderDOM = {
         .then((ApiJson) => {
 
             //console.log(ApiJson); //Este contiene todos los datos de la API
-            console.log(ApiJson.data.results);
+            //console.log(ApiJson.data.results); //
 
 
             //Variables
             const ApiResultados = ApiJson.data.results;
-            
-            personajesCompleto(ApiResultados);
+            console.log(ApiResultados); // muestra arreglo de data "objeto Json "> data > results
 
-            txtBuscar.addEventListener('keyup', (e)=> {  
+
+            //Funciones llamadas
+            personajesCompleto(ApiResultados); 
+
+
+
+
+
+        txtBuscar.addEventListener('keyup', (e)=> {  
             
                 const nombreBuscado = e.target.value; 
-                
-                if (nombreBuscado.length <= 0){   
-                    personajesCompleto();
-                }else{
-                    SinpersonajesCompleto(nombreBuscado);
+
+                if (nombreBuscado.length >= 0) {
+                    buscador(nombreBuscado,ApiResultados);
+                } else {
+                    personajesCompleto(ApiResultados); 
                 }
-            });
+            }); 
+
+
 
 
             function paginate(array, page_size, page_number) {
@@ -69,111 +78,6 @@ const RenderDOM = {
                 //showNoticias(pagination)
             }
 
-/* Inicio <-- Rompiendo Con pajinador ------------------------------------*/
-            function personajesCompleto4(_conexion_api){
-                var pagination = paginate(conexion_api,pageSize,pageNumber);
-                contenidoHTML = "";                
-                for (const superHero of ApiJson.data.results) {
-                    let urlHero = superHero.urls[1].url;
-                        if (pageNumber == 1) {
-                               //if(noImg!== superHero.thumbnail.path){  
-                                //contenidoHTML += `<div class="llamada">`;                          
-                                contenidoHTML += ` 
-                                <div class="llamada">                           
-                                    <div class="thumb">
-                                        <a href="${urlHero}" target="_blank">
-                                            <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
-                                        </a>
-                                    </div>
-                                    <div class="descripcion">
-                                        <a href="${urlHero}" target="_blank">
-                                            <p class="nombre">${superHero.name}</p>
-                                        </a>
-                                    </div>
-                                </div>          
-                            `;
-                          //  }                            
-                        }                     
-                       // console.log(superHero.name);
-                    }
-                   /*  contenidoHTML +=`
-                    <div class="container-pagination">
-                        <button class="btn" id="btn-prev" onclick="previusPage()">Previous</button>
-                        <button class="btn" id="btn-next" onclick="nextPage()"}>Next</button>
-                    </div>`; */
-                    
-                    //pageNumber >1  ? btn_prev.disabled = false :"";
-                    //pageNumber < pageCont ?(btn_next.disabled = false):"" ;
-                    return container.innerHTML = contenidoHTML; 
-                    //return container.innerHTML = contenidoHTML;
-            }
-
-
-
-/*-- Fin  <-- Rompiendo Con pajinador ------------------------------------*/ //Moviendo a funciones
-
-
-   /*          function personajesCompleto(){
-                var pagination = paginate(conexion_api,pageSize,pageNumber);
-                contenidoHTML = "";                
-                for (const superHero of ApiJson.data.results) {
-                    let urlHero = superHero.urls[1].url;
-                        //if(noImg!== superHero.thumbnail.path){  
-                            contenidoHTML += `<div class="llamada">`;                          
-                            contenidoHTML += `                            
-                                <div class="thumb">
-                                    <a href="${urlHero}" target="_blank">
-                                        <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
-                                    </a>
-                                </div>
-                                <div class="descripcion">
-                                    <a href="${urlHero}" target="_blank">
-                                        <p class="nombre">${superHero.name}</p>
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                       // }
-                       // console.log(superHero.name);
-                    }
-                    
-                    return container.innerHTML = contenidoHTML; 
-                    //return container.innerHTML = contenidoHTML;
-            } */
-
-
-
-            
-/* Inicio <--  Buscador ------------------------------------*/   
-            function SinpersonajesCompleto(nombreBuscado){
-                contenidoHTML = "";                
-
-                for (const superHero of ApiJson.data.results) {
-                    let urlHero = superHero.urls[1].url;
-                    const nombreAPI = superHero.name.toLowerCase();
-                    const nombreRecibido = nombreBuscado.toLowerCase();
-                    //console.log(nombreRecibido);
-                    //console.log(nombreAPI);
-                    if(nombreAPI.includes(nombreRecibido)){
-                        contenidoHTML += `
-                        <div class="llamada">
-                            <div class="thumb">
-                                <a href="${urlHero}" target="_blank">
-                                <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
-                                </a>
-                            </div>
-                            <div class="descripcion">
-                                <a href="${urlHero}" target="_blank">
-                                    <p class="nombre">${superHero.name}</p>
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                }
-                }
-                container.innerHTML = contenidoHTML;
-            }
-/*-- Fin  <--  Buscador ------------------------------------*/
 
         })     /* Fin <-- ApiJson Api ------------------------------------*/   
 /*     }
@@ -182,10 +86,20 @@ RenderDOM.render(); */
 
 //  Eventos
 
+/* txtBuscar.addEventListener('keyup', (e,ApiResultados)=> { 
+    console.log("hola");             
+    const nombreBuscado = e.target.value; 
+    if (nombreBuscado.length >= 0) {
+        buscador(nombreBuscado,ApiResultados);
+    } else {
+        personajesCompleto(ApiResultados); 
+    }
+} */
+
 
 //  Funciones
 
-
+// Listado de personajes
 function personajesCompleto(ApiResultados){
     //var pagination = paginate(conexion_api,pageSize,pageNumber);
     contenidoHTML = "";                
@@ -207,4 +121,33 @@ function personajesCompleto(ApiResultados){
             `;
         }
         return contenedor_div.innerHTML = contenidoHTML; 
+}
+
+
+
+// Funcion buscador
+function buscador(nombreBuscado,ApiResultados){
+    contenidoHTML = "";
+    for (const superHero of ApiResultados) {
+        const enlace_Link_Heroe = superHero.urls[1].url; 
+        const nombreAPI = superHero.name.toLowerCase();
+        const nombreRecibido = nombreBuscado.toLowerCase();
+        if(nombreAPI.includes(nombreRecibido)){
+            contenidoHTML += `  
+                <div class="contenedor-lista-heroes">                          
+                    <div class="contenedor-imagen">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                            <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
+                        </a>
+                    </div>
+                    <div class="contendor-descripcion">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                            <p class="parrafo-nombre">${superHero.name}</p>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    return contenedor_div.innerHTML = contenidoHTML;
 }

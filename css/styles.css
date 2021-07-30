@@ -60,10 +60,14 @@ section .contenedor_div {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 section .contenedor_div .contenedor-lista-heroes {
   margin: 1%;
+  max-width: 250px;
+  max-height: 270px;
+  width: 100%;
+  height: 100%;
 }
 section .contenedor_div .contenedor-lista-heroes .contenedor-imagen a img {
   max-width: 250px;
