@@ -22,6 +22,9 @@ body a {
   color: #B4C5E4;
 }
 
+header {
+  margin: 2%;
+}
 header .contenedor-header {
   display: flex;
   flex-direction: row;
@@ -29,7 +32,7 @@ header .contenedor-header {
   justify-content: space-between;
   max-width: 1200px;
   width: 90%;
-  margin: 1% auto;
+  margin: auto;
 }
 header .contenedor-header .inicio h3 {
   text-align: center;
@@ -51,7 +54,30 @@ section {
   margin: auto;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
+}
+section .contenedor_div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+section .contenedor_div .contenedor-lista-heroes {
+  margin: 1%;
+}
+section .contenedor_div .contenedor-lista-heroes .contenedor-imagen a img {
+  max-width: 250px;
+  max-height: 250px;
+  height: 100%;
+  border-radius: 5px;
+}
+section .contenedor_div .contenedor-lista-heroes .contendor-descripcion a {
+  text-align: center;
+  font-size: 20px;
+  background: #ccc;
+}
+section .contenedor_div .contenedor-lista-heroes .contendor-descripcion a:hover {
+  box-shadow: 1px 1px 5px #B4C5E4;
 }
 section .container-super-hero .list-super-hero {
   display: flex;

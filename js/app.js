@@ -1,9 +1,11 @@
 "use strict"
+/* "use strict"
 const RenderDOM = {
-    render: () => {
+    render: () => { */
         // Variables y conección
         const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
-        const container = document.getElementById('id-Contenedor-superHero');        
+        const container = document.getElementById('id-Contenedor-superHero');
+        const contenedor_div = document.getElementById("contenedor_div");     
         let contenidoHTML = '';
         //const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
 
@@ -26,12 +28,20 @@ const RenderDOM = {
         let pageCont = Math.ceil(conexion_api.length/pageSize);
         /*-- Fin  <-- Paginación ------------------------------------*/
         
+
+        /* Inicio <-- ApiJson Api ------------------------------------*/
         fetch(conexion_api)
         .then(res => res.json())
-        .then((json) => {
+        .then((ApiJson) => {
 
-            console.log(json,"RES.JSON"); //Este contiene todos los datos de la API
-            personajesCompleto();
+            //console.log(ApiJson); //Este contiene todos los datos de la API
+            console.log(ApiJson.data.results);
+
+
+            //Variables
+            const ApiResultados = ApiJson.data.results;
+            
+            personajesCompleto(ApiResultados);
 
             txtBuscar.addEventListener('keyup', (e)=> {  
             
@@ -63,7 +73,7 @@ const RenderDOM = {
             function personajesCompleto4(_conexion_api){
                 var pagination = paginate(conexion_api,pageSize,pageNumber);
                 contenidoHTML = "";                
-                for (const superHero of json.data.results) {
+                for (const superHero of ApiJson.data.results) {
                     let urlHero = superHero.urls[1].url;
                         if (pageNumber == 1) {
                                //if(noImg!== superHero.thumbnail.path){  
@@ -100,13 +110,13 @@ const RenderDOM = {
 
 
 
-/*-- Fin  <-- Rompiendo Con pajinador ------------------------------------*/
+/*-- Fin  <-- Rompiendo Con pajinador ------------------------------------*/ //Moviendo a funciones
 
 
-            function personajesCompleto(){
+   /*          function personajesCompleto(){
                 var pagination = paginate(conexion_api,pageSize,pageNumber);
                 contenidoHTML = "";                
-                for (const superHero of json.data.results) {
+                for (const superHero of ApiJson.data.results) {
                     let urlHero = superHero.urls[1].url;
                         //if(noImg!== superHero.thumbnail.path){  
                             contenidoHTML += `<div class="llamada">`;                          
@@ -129,7 +139,7 @@ const RenderDOM = {
                     
                     return container.innerHTML = contenidoHTML; 
                     //return container.innerHTML = contenidoHTML;
-            }
+            } */
 
 
 
@@ -138,7 +148,7 @@ const RenderDOM = {
             function SinpersonajesCompleto(nombreBuscado){
                 contenidoHTML = "";                
 
-                for (const superHero of json.data.results) {
+                for (const superHero of ApiJson.data.results) {
                     let urlHero = superHero.urls[1].url;
                     const nombreAPI = superHero.name.toLowerCase();
                     const nombreRecibido = nombreBuscado.toLowerCase();
@@ -165,7 +175,36 @@ const RenderDOM = {
             }
 /*-- Fin  <--  Buscador ------------------------------------*/
 
-        })        
-    }
+        })     /* Fin <-- ApiJson Api ------------------------------------*/   
+/*     }
 };
-RenderDOM.render();
+RenderDOM.render(); */
+
+//  Eventos
+
+
+//  Funciones
+
+
+function personajesCompleto(ApiResultados){
+    //var pagination = paginate(conexion_api,pageSize,pageNumber);
+    contenidoHTML = "";                
+    for (const superHero of ApiResultados) {
+        const enlace_Link_Heroe = superHero.urls[1].url;                      
+                contenidoHTML += `  
+                <div class="contenedor-lista-heroes">                          
+                    <div class="contenedor-imagen">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                            <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
+                        </a>
+                    </div>
+                    <div class="contendor-descripcion">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                            <p class="parrafo-nombre">${superHero.name}</p>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+        return contenedor_div.innerHTML = contenidoHTML; 
+}
