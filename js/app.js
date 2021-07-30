@@ -1,15 +1,15 @@
 "use strict"
 const RenderDOM = {
     render: () => {
-        /* Inicio <-- Declaración de variables ------------------------------------*/
+        // Variables y conección
         const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
         const container = document.getElementById('id-Contenedor-superHero');        
         let contenidoHTML = '';
-        const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
+        //const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
 
 
-        let idBuscar = document.getElementById('idBuscar');
-        idBuscar.value = "";
+        let txtBuscar = document.getElementById('txtBuscar');
+        txtBuscar.value = "";
 
         const btn_prev = document.getElementById("btn-prev");
         const btn_next = document.getElementById("btn-next");
@@ -17,7 +17,7 @@ const RenderDOM = {
         //btn_next.disabled = false;
 
 
-        /*-- Fin  <-- Declaración de variables ------------------------------------*/
+        
         
         /* Inicio <-- Paginación ------------------------------------*/
         let pageNumber = 1;
@@ -30,10 +30,10 @@ const RenderDOM = {
         .then(res => res.json())
         .then((json) => {
 
-            console.log(json,"RES.JSON");
+            console.log(json,"RES.JSON"); //Este contiene todos los datos de la API
             personajesCompleto();
 
-            idBuscar.addEventListener('keyup', (e)=> {  
+            txtBuscar.addEventListener('keyup', (e)=> {  
             
                 const nombreBuscado = e.target.value; 
                 

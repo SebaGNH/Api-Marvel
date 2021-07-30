@@ -5,21 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Hero Marvel</title>
-    <link rel="shortcut icon" href="./img/iconMarvel.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/faviconMarvel.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css">
     
 </head>
 <body>
     <header>
-        <div class="cont-buscador">
-            <input type="text" id="idBuscar" placeholder="Buscar personaje...">
+        <div class="contenedor-header">
+            <div class="inicio">
+                <h3 class="titulo">Marvel Super Hero</h3> 
+            </div>
+            <div class="contenedor-buscador">
+                <input type="text" id="txtBuscar" placeholder="Buscar personaje...">
+            </div>
+            <div class="favoritos">
+                <i class="fas fa-star"></i>
+            </div>
         </div>
     </header>
 
     <section>
         <div class="container-super-hero">
-            <h3 class="titulo">Marvel Super Hero</h3>
             <div  class="list-super-hero" id="id-Contenedor-superHero"></div>
         </div>
         <!-- <div class="container-pagination">
@@ -28,5 +36,5 @@
         </div> -->
     </section>
 </body>
-<script src="./script/script.js"></script>
+<script src="./js/app.js"></script>
 </html>
