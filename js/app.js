@@ -4,9 +4,10 @@ const RenderDOM = {
     render: () => { */
         // Variables y conección
         const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
-        const container = document.getElementById('id-Contenedor-superHero');
         const contenedor_div = document.getElementById("contenedor_div");     
         let contenidoHTML = '';
+        let contenedor_botones = document.getElementById("contenedor-botones");
+        const paginacion_div = document.getElementById("paginacion_div");
         //const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
 
 
@@ -31,7 +32,7 @@ const RenderDOM = {
 
         /* Inicio <-- ApiJson Api ------------------------------------*/
         fetch(conexion_api)
-        .then(res => res.json())
+        .then(res => res.json()) // res = respuesta
         .then((ApiJson) => {
 
             //console.log(ApiJson); //Este contiene todos los datos de la API
@@ -59,7 +60,7 @@ const RenderDOM = {
                 }
             }); 
 
-
+            contenedorBotones();
 
 
             function paginate(array, page_size, page_number) {
@@ -76,11 +77,18 @@ const RenderDOM = {
                 //showNoticias(pagination)
             }
 
+            /* Inicio <-- Contenedor Botones ------------------------------------*/
+                
+            /*-- Fin  <-- Contenedor Botones ------------------------------------*/
+
+
+
+
 
         })     /* Fin <-- ApiJson Api ------------------------------------*/   
-/*     }
-};
-RenderDOM.render(); */
+  /*  }
+ };
+RenderDOM.render();  */
 
 
 
@@ -138,3 +146,49 @@ function buscador(nombreBuscado,ApiResultados){
     }
     return contenedor_div.innerHTML = contenidoHTML;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function contenedorBotones(){ // contenedor_botones <-- id div
+    const contenedor = `
+    <div class="botones">
+        <div class="contenedor-atras">
+            <button  class="btn-siguiente-anterior" type="button" onclick="consolaPrueba()">Atrás</button>
+        </div>
+        <div class="contenedor-siguiente">
+            <button  class="btn-siguiente-anterior" type="button" onclick="consolaPrueba()">Siguiente</button>
+        </div>
+    </div>
+    `;
+
+    return contenedor_botones.innerHTML = contenedor;
+
+}
+
+function consolaPrueba(){
+    console.log("Consola de pruebas");
+}
+
+
+
