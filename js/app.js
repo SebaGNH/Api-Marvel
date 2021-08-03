@@ -1,6 +1,6 @@
 "use strict"
 
-        // Variables y conección
+// Variables y conección
 const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
 const contenedor_div = document.getElementById("contenedor_div");     
 let contenidoHTML = '';
@@ -50,36 +50,7 @@ fetch(conexion_api)
     }); 
 
 
-    function configurarPaginacion(ApiResultados,cantidadResultadosPorPagina,paginaActual){
-        paginacion_div.innerHTML ="";
-    
-        let cantidadPaginas = Math.ceil(ApiResultados.length / cantidadResultadosPorPagina);
-        for (let i = 1; i < cantidadPaginas +1; i++) {
-            let btn = botonesPaginacion(i,ApiResultados,paginaActual);
-            paginacion_div.appendChild(btn);
-        }
-    
-    }
-    
-    
-    function botonesPaginacion(indexArr,ApiResultados,paginaActual){
-        let boton = document.createElement('button');
-        boton.innerText = indexArr;
-        if (paginaActual == indexArr) {
-            boton.className = "active";
-        }
-        boton.addEventListener("click",function(){
-            paginaActual = indexArr;
-            personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina); 
-    
-            let btnAtual = document.querySelector(".active");
-            btnAtual.className = "";
-            boton.className = "active";
-        });
-        return boton;
-    }
-    
-    
+
 
 
 
@@ -120,44 +91,34 @@ function personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagi
 
 
 
+function configurarPaginacion(ApiResultados,cantidadResultadosPorPagina,paginaActual){
+    paginacion_div.innerHTML ="";
 
+    let cantidadPaginas = Math.ceil(ApiResultados.length / cantidadResultadosPorPagina);
+    for (let i = 1; i < cantidadPaginas +1; i++) {
+        let btn = botonesPaginacion(i,ApiResultados,paginaActual,cantidadResultadosPorPagina);
+        paginacion_div.appendChild(btn);
+    }
 
-
-
-
-function personajesCompletoRespaldo(ApiResultados,resultadosPorPagina,paginaActual){
-    //var pagination = paginate(conexion_api,pageSize,pageNumber);
-    contenidoHTML = "";    
-    paginaActual--;
-    for (let i = 0; i < ApiResultados.length; i++) {
-        
-    }            
-    for (const superHero of ApiResultados) {
-        const enlace_Link_Heroe = superHero.urls[1].url;                      
-                contenidoHTML += `  
-                <div class="contenedor-lista-heroes">                          
-                    <div class="contenedor-imagen">
-                        <a href="${enlace_Link_Heroe}" target="_blank">
-                            <img src="${superHero.thumbnail.path}.${superHero.thumbnail.extension}" alt="${superHero.name}">
-                        </a>
-                    </div>
-                    <div class="contendor-descripcion">
-                        <a href="${enlace_Link_Heroe}" target="_blank">
-                            <p class="parrafo-nombre">${superHero.name}</p>
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-        return contenedor_div.innerHTML = contenidoHTML; 
 }
 
+//Clases a botones, asignación de números y clase activa para restaltar la actual
+function botonesPaginacion(indexArr,ApiResultados,paginaActual,cantidadResultadosPorPagina){
+    let boton = document.createElement('button');
+    boton.innerText = indexArr;
+    if (paginaActual == indexArr) {
+        boton.className = "active";
+    }
+    boton.addEventListener("click",function(){
+        paginaActual = indexArr;
+        personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina); 
 
-
-
-
-
-
+        let btnAtual = document.querySelector(".active");
+        btnAtual.className = "";
+        boton.className = "active";
+    });
+    return boton;
+}
 
 
 
@@ -187,49 +148,3 @@ function buscador(nombreBuscado,ApiResultados){
     }
     return contenedor_div.innerHTML = contenidoHTML;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* function contenedorBotones(){ // contenedor_botones <-- id div
-    const contenedor = `
-    <div class="botones">
-        <div class="contenedor-atras">
-            <button  class="btn-siguiente-anterior" type="button" onclick="consolaPrueba()">Atrás</button>
-        </div>
-        <div class="contenedor-siguiente">
-            <button  class="btn-siguiente-anterior" type="button" onclick="consolaPrueba()">Siguiente</button>
-        </div>
-    </div>
-    `;
-
-    return contenedor_botones.innerHTML = contenedor;
-
-}
-
-function consolaPrueba(){
-    console.log("Consola de pruebas");
-}
- */
-
-
