@@ -1,103 +1,137 @@
 "use strict"
-/* "use strict"
-const RenderDOM = {
-    render: () => { */
+
         // Variables y conección
-        const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
-        const contenedor_div = document.getElementById("contenedor_div");     
-        let contenidoHTML = '';
-        let contenedor_botones = document.getElementById("contenedor-botones");
-        const paginacion_div = document.getElementById("paginacion_div");
-        //const noImg = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
+const conexion_api = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=eaa98daf4d86236acb4de698f6808297&hash=c0819d4ad93eb938110b0d68f54532f0';
+const contenedor_div = document.getElementById("contenedor_div");     
+let contenidoHTML = '';
+let contenedor_botones = document.getElementById("contenedor-botones");
+const paginacion_div = document.getElementById("paginacion_div");
 
 
-        let txtBuscar = document.getElementById('txtBuscar');
-        txtBuscar.value = "";
+let txtBuscar = document.getElementById('txtBuscar');
+txtBuscar.value = "";
 
-        const btn_prev = document.getElementById("btn-prev");
-        const btn_next = document.getElementById("btn-next");
-        //btn_prev.disabled = false;
-        //btn_next.disabled = false;
+const btn_prev = document.getElementById("btn-prev");
+const btn_next = document.getElementById("btn-next");
 
+/* Inicio <-- ApiJson Api ------------------------------------*/
+fetch(conexion_api)
+.then(res => res.json()) // res = respuesta
+.then((ApiJson) => {
 
-        
-        
-        /* Inicio <-- Paginación ------------------------------------*/
-        let pageNumber = 1;
-        let pageSize = 5;
-        let pagination;
-        let pageCont = Math.ceil(conexion_api.length/pageSize);
-        /*-- Fin  <-- Paginación ------------------------------------*/
-        
-
-        /* Inicio <-- ApiJson Api ------------------------------------*/
-        fetch(conexion_api)
-        .then(res => res.json()) // res = respuesta
-        .then((ApiJson) => {
-
-            //console.log(ApiJson); //Este contiene todos los datos de la API
-            //console.log(ApiJson.data.results); //
+    //console.log(ApiJson); //Este contiene todos los datos de la API
+    //console.log(ApiJson.data.results); //
 
 
-            //Variables
-            const ApiResultados = ApiJson.data.results;
-            console.log(ApiResultados); // muestra arreglo de data "objeto Json "> data > results
+    //Variables
+    const ApiResultados = ApiJson.data.results;
+    //Este clg estoy usando para ver la info completa
+    //console.log(ApiResultados); // muestra arreglo de data "objeto Json "> data > results
 
 
-            //Funciones llamadas
-            personajesCompleto(ApiResultados); 
+    let paginaActual = 1;
+    let cantidadResultadosPorPagina = 8;
+
+
+    //Funciones llamadas
+    personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina); 
+    configurarPaginacion(ApiResultados,cantidadResultadosPorPagina,paginaActual);
 
 
 
-
-            //Eventos
-            txtBuscar.addEventListener('keyup', (e)=> {  
-                const nombreBuscado = e.target.value; 
-                if (nombreBuscado.length >= 0) {
-                    buscador(nombreBuscado,ApiResultados);
-                } else {
-                    personajesCompleto(ApiResultados); 
-                }
-            }); 
-
-            contenedorBotones();
+    //Evento Buscador
+    txtBuscar.addEventListener('keyup', (e)=> {  
+        const nombreBuscado = e.target.value; 
+        if (nombreBuscado.length >= 0) {
+            buscador(nombreBuscado,ApiResultados);
+        } else {
+            personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina); 
+        }
+    }); 
 
 
-            function paginate(array, page_size, page_number) {
-                return array.slice((page_number - 1) * page_size, page_number * page_size);
-            }
-            function nextPage(){
-                pageNumber ++;
-                console.log("next page");
-                //showNoticias(pagination)
-            }
-            function previusPage(){
-                console.log("Prev Page");
-                pageNumber --;
-                //showNoticias(pagination)
-            }
+    function configurarPaginacion(ApiResultados,cantidadResultadosPorPagina,paginaActual){
+        paginacion_div.innerHTML ="";
+    
+        let cantidadPaginas = Math.ceil(ApiResultados.length / cantidadResultadosPorPagina);
+        for (let i = 1; i < cantidadPaginas +1; i++) {
+            let btn = botonesPaginacion(i,ApiResultados,paginaActual);
+            paginacion_div.appendChild(btn);
+        }
+    
+    }
+    
+    
+    function botonesPaginacion(indexArr,ApiResultados,paginaActual){
+        let boton = document.createElement('button');
+        boton.innerText = indexArr;
+        if (paginaActual == indexArr) {
+            boton.className = "active";
+        }
+        boton.addEventListener("click",function(){
+            paginaActual = indexArr;
+            personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina); 
+    
+            let btnAtual = document.querySelector(".active");
+            btnAtual.className = "";
+            boton.className = "active";
+        });
+        return boton;
+    }
+    
+    
 
-            /* Inicio <-- Contenedor Botones ------------------------------------*/
-                
-            /*-- Fin  <-- Contenedor Botones ------------------------------------*/
 
 
+}); /* Fin <-- ApiJson Api ------------------------------------*/   
 
-
-
-        })     /* Fin <-- ApiJson Api ------------------------------------*/   
-  /*  }
- };
-RenderDOM.render();  */
 
 
 
 //  Funciones
 
 // Listado de personajes
-function personajesCompleto(ApiResultados){
+function personajesCompleto(ApiResultados,paginaActual,cantidadResultadosPorPagina){
+    contenidoHTML = "";    
+    paginaActual--; // se resta uno para que arranque de 0
+    let inicio = cantidadResultadosPorPagina * paginaActual;
+    let fin = inicio + cantidadResultadosPorPagina;
+    let resultadosAMostrar = ApiResultados.slice(inicio,fin); // muestra personajes del N al N
+
+    for (let i = 0; i < resultadosAMostrar.length; i++) {
+        const enlace_Link_Heroe = resultadosAMostrar[i].urls[1].url;         
+                contenidoHTML += `  
+                <div class="contenedor-lista-heroes">                          
+                    <div class="contenedor-imagen">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                        <img src="${resultadosAMostrar[i].thumbnail.path}.${resultadosAMostrar[i].thumbnail.extension}" alt="${resultadosAMostrar[i].name}">
+                        </a>
+                    </div>
+                    <div class="contendor-descripcion">
+                        <a href="${enlace_Link_Heroe}" target="_blank">
+                            <p class="parrafo-nombre">${resultadosAMostrar[i].name}</p>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+        return contenedor_div.innerHTML = contenidoHTML; 
+}
+
+
+
+
+
+
+
+
+function personajesCompletoRespaldo(ApiResultados,resultadosPorPagina,paginaActual){
     //var pagination = paginate(conexion_api,pageSize,pageNumber);
-    contenidoHTML = "";                
+    contenidoHTML = "";    
+    paginaActual--;
+    for (let i = 0; i < ApiResultados.length; i++) {
+        
+    }            
     for (const superHero of ApiResultados) {
         const enlace_Link_Heroe = superHero.urls[1].url;                      
                 contenidoHTML += `  
@@ -117,6 +151,13 @@ function personajesCompleto(ApiResultados){
         }
         return contenedor_div.innerHTML = contenidoHTML; 
 }
+
+
+
+
+
+
+
 
 
 
@@ -170,7 +211,7 @@ function buscador(nombreBuscado,ApiResultados){
 
 
 
-function contenedorBotones(){ // contenedor_botones <-- id div
+/* function contenedorBotones(){ // contenedor_botones <-- id div
     const contenedor = `
     <div class="botones">
         <div class="contenedor-atras">
@@ -189,6 +230,6 @@ function contenedorBotones(){ // contenedor_botones <-- id div
 function consolaPrueba(){
     console.log("Consola de pruebas");
 }
-
+ */
 
 

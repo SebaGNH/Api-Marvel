@@ -11,8 +11,6 @@ body {
 }
 body img {
   width: 100%;
-  height: auto;
-  width: auto;
   margin: 0 auto;
 }
 body h3 {
@@ -20,6 +18,11 @@ body h3 {
 }
 body a {
   color: #B4C5E4;
+}
+body .btn-siguiente-anterior {
+  max-width: 400px;
+  width: 100%;
+  background: #2829;
 }
 
 header {
@@ -55,6 +58,7 @@ section {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: column;
 }
 section .contenedor_div {
   display: flex;
@@ -83,6 +87,49 @@ section .contenedor_div .contenedor-lista-heroes .contendor-descripcion a {
 }
 section .contenedor_div .contenedor-lista-heroes .contendor-descripcion a:hover {
   box-shadow: 1px 1px 5px #B4C5E4;
+}
+section .paginacion_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+section .paginacion_div button {
+  width: 50px;
+  height: 50px;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #4ae;
+  margin: 5px;
+  transition: 0.4s;
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+section .paginacion_div button:hover {
+  background-color: #4ea;
+}
+section .paginacion_div .active {
+  background-color: #4ea;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+section .botones {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 1200px;
+  width: 90%;
+  background: red;
+}
+section .botones .contenedor-atras {
+  background: red;
+}
+section .botones .contenedor-siguiente {
+  background: gray;
 }
 section .container-super-hero .list-super-hero {
   display: flex;
