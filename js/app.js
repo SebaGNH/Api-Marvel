@@ -102,6 +102,7 @@ function configurarPaginacion(ApiResultados,cantidadResultadosPorPagina,paginaAc
 
 }
 
+
 //Clases a botones, asignación de números y clase activa para restaltar la actual
 function botonesPaginacion(indexArr,ApiResultados,paginaActual,cantidadResultadosPorPagina){
     let boton = document.createElement('button');
