@@ -20,8 +20,6 @@ fetch(conexion_api)
 .then((ApiJson) => {
 
     //console.log(ApiJson); //Este contiene todos los datos de la API
-    //console.log(ApiJson.data.results); //
-
 
     //Variables
     const ApiResultados = ApiJson.data.results;
